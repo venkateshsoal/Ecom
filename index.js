@@ -1,3 +1,4 @@
+const config = require('config');
 const express = require('express');
 const Joi = require('joi');
 const expressLayouts = require('express-ejs-layouts');
@@ -12,6 +13,12 @@ const auth = require('./routes/auth');
 
 const app = express()
 const port = 3000
+
+if(!config.get('jwtPrivateKey')){
+    console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+    process.exit(1);
+}
+
 
 mongoose.connect('mongodb://localhost/eEcom')
     .then(() => console.log('connected to DB...'))
